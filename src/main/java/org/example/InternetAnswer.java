@@ -1,0 +1,53 @@
+package org.example;
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class InternetAnswer {
+    public static void main(String[] args) {
+//            Scanner in = new Scanner(System.in);
+//            String s = in.next();
+
+            String s = "()[]}";
+
+            char bracket[] = s.toCharArray();
+
+            LinkedList<Character> stack = new LinkedList<>();
+
+            int n = bracket.length;
+            int first_open_bracket = 0;
+
+            for (int i = 0; i < n; i++) {
+                if (bracket[i] == '{' || bracket[i] == '(' || bracket[i] == '[') {
+                    if (stack.isEmpty())
+                        first_open_bracket = i+1;
+                    stack.push(bracket[i]);
+                } else if (bracket[i] == '}' || bracket[i] == ')' || bracket[i] == ']') {
+                    if (stack.peek() == reverseBracket(bracket[i]))
+                        stack.pop();
+                    else {
+                        System.out.println(i+1);
+                        return;
+                    }
+                }
+            }
+
+            if (stack.isEmpty())
+                System.out.println("Success");
+            else
+                System.out.println(first_open_bracket);
+        }
+
+        private static Character reverseBracket(char c) {
+            switch (c) {
+                case '}':
+                    return '{';
+                case ']':
+                    return '[';
+                case ')':
+                    return '(';
+                default:
+                    return '-';
+            }
+        }
+    }
